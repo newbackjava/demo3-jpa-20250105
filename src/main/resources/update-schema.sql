@@ -1,0 +1,22 @@
+ALTER TABLE board
+    ADD img VARCHAR(255) NULL;
+
+ALTER TABLE board
+    ADD no INT NULL;
+
+DROP TABLE liveevent;
+
+ALTER TABLE board
+    DROP COLUMN bno;
+
+ALTER TABLE board
+    MODIFY content VARCHAR(45);
+
+ALTER TABLE board
+    MODIFY title VARCHAR(45);
+
+ALTER TABLE board
+    MODIFY writer VARCHAR(45);
+
+ALTER TABLE board
+    ADD PRIMARY KEY (no);

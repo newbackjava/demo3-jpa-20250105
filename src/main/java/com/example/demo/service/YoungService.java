@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.api.ApiYoungParser;
 import com.example.demo.repository.YoungRepository;
 import com.example.demo.entity.Young;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +15,8 @@ public class YoungService {
     private final YoungRepository youngRepository;
 
     public void insert() {
-        YoungParser parser = new YoungParser();
-        List<Young> list = parser.parse();
+        ApiYoungParser parser = new ApiYoungParser();
+        List<Young> list = parser.young();
 
         int index = 1;
         for (Young young : list) {

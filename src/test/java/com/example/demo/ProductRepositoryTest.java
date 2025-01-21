@@ -26,7 +26,7 @@ class ProductRepositoryTest {
 
     @Test
      public void getProductById() {
-        Product product = productRepository.findById(1L).get();
+        Product product = productRepository.findById(2L).get();
         assertThat(product).isNull(); //에러가 날때만 출력
     }
 

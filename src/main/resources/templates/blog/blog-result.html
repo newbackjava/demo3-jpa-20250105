@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout.html">
+
+<div class="container" layout:fragment="content" style="background-color: white">
+
+  <section class="blog">
+    <div class="container">
+      <div class="title">
+        <h2>Latest Blog Post</h2>
+        <p>Lorem ipsum madolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor coli <span>incididunt ut labore Lorem ipsum madolor sit amet, consectetur adipisicing incididunt.</span></p>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-4">
+          <div class="thumbnail">
+            <a class="hover-img" href="javascript:void(0)">
+              <img alt="image" th:src="@{/images/c.png}" style="width: 350px; height: 400px;">  </a>
+            <div class="caption">
+              <ul class="details">
+                <li>By <span>Admin</span></li>
+                <li>Jan 15 2017</li>
+                <li>(20) Comments</li>
+              </ul>
+              <h3><a th:href="@{/blog-details}">앤드류 카네기</a></h3>
+              <p th:if="${contentId != 'c'}">
+                The man who dies rich, dies disgraced," said Andrew Carnegie,
+                emphasizing that surplus wealth is a sacred trust meant to be administered for the good of the community during one's lifetime. He believed that the best way to benefit society was to "place within its reach the ladders upon which the aspiring can rise," underscoring the value of providing opportunities for others. To Carnegie, leadership and success were not about doing everything oneself or claiming all the credit, as he noted, "No man will make a great leader who wants to do it all himself, or to get all the credit for doing it." Instead,
+                "The secret of success lies not in doing your own work,
+                but in recognizing the best person to do it."
+                Actions spoke louder than words to Carnegie: "As I grow older,
+                I pay less attention to what men say. I just watch what they do."
+                These principles collectively highlight his philosophy of humility, leadership, and the moral responsibility of wealth.
+              </p>
+              <p th:if="${contentId == 'c'}">
+                [[${result}]]
+              </p>
+              <a href="/blog/blog" class="readmore">앞페이지로</a> </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+          <div class="thumbnail">
+            <a class="hover-img" href="javascript:void(0)">
+              <img alt="image" th:src="@{/images/t.png}"  style="width: 350px; height: 400px;"> </a>
+            <div class="caption">
+              <ul class="details">
+                <li>By <span>Admin</span></li>
+                <li>Jan 15 2017</li>
+                <li>(20) Comments</li>
+              </ul>
+              <h3><a href="/blog-details">도널드 트럼프</a></h3>
+              <p th:if="${contentId != 't'}">
+                America is the greatest country in the world,
+                and we are going to make it greater than ever before.
+                We believe in strong borders, fair trade, and putting America first. We will bring back jobs,
+                rebuild our industries, and create opportunities for every hardworking American.
+                Our nation thrives when its people have the freedom to dream, to build, and to succeed.
+                Together, we will protect our values, defend our freedoms,
+                and always stand for the rule of law. We don’t settle for mediocrity;
+                we aim for the best because we know that America doesn’t back down.
+                We will restore the promise of this great land, not just for us, but for generations to come.
+                Together, we will win, and we will win big. Believe me, the best is yet to come
+              </p>
+              <p th:if="${contentId == 't'}">
+                [[${result}]]
+              </p>
+              <a href="/blog/blog" class="readmore">앞페이지로</a> </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+          <div class="thumbnail">
+            <a class="hover-img" href="javascript:void(0)">
+              <img alt="image" th:src="@{/images/o.png}"  style="width: 350px; height: 400px;">  </a>
+            <div class="caption">
+              <ul class="details">
+                <li>By <span>Admin</span></li>
+                <li>Jan 15 2017</li>
+                <li>(20) Comments</li>
+              </ul>
+              <h3><a href="/blog-details">오프라 윈프리</a></h3>
+              <p th:if="${contentId != 'o'}">
+                여러분의 삶은 여러분이 만들어가는 것입니다.
+                선택의 순간마다 용기를 내어 자신을 믿고 앞으로 나아가세요.
+                우리의 가장 큰 힘은 바로 자신을 사랑하고 인정하는 데서 나옵니다.
+                어떤 어려움이 있더라도 그것이 여러분을 정의하지 못하게 하세요.
+                대신, 그 어려움을 극복함으로써 여러분이 누구인지 보여주세요.
+                꿈은 이루어지기 위해 존재하며, 그 꿈을 향해 한 걸음씩 나아갈 때 여러분의 진정한 잠재력이 드러납니다.
+                우리는 서로 연결되어 있고, 함께할 때 더 강해집니다. 여러분 안에는 이미 모든 해답이 있습니다.
+                자신의 목소리를 믿고, 세상에 그 목소리를 들려주세요. 여러분은 그럴 만한 가치가 있습니다.
+                여러분의 최고의 날은 아직 오지 않았습니다.
+              </p>
+              <p th:if="${contentId == 'o'}">
+                [[${result}]]
+              </p>
+              <a href="/blog/blog" class="readmore">앞페이지로</a> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</html>

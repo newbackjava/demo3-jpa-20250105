@@ -23,7 +23,7 @@ public class ChatController {
 
         System.out.println("chatVO >>> " + chat);
         //return messageRepository.save(message); // 저장 후 반환
-        return chat;
+        return chatService.saveMessage(chat);
     }
 
     @MessageMapping("/chatbot") // 클라이언트에서 "/app/sendMessage"로 보낸 메시지 처리

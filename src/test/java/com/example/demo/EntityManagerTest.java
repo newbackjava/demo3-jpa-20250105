@@ -17,7 +17,7 @@ public class EntityManagerTest {
     @Transactional
     public void test(){
         Product product = Product.builder()
-                .productId(1L)
+                .productId(10L)
                 .name("shoes")
                 .content("summer shoes")
                 .price(10000)

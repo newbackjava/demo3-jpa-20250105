@@ -17,19 +17,23 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    // id를 가지고 상세 검색
     public Product findById(Long productId) {
-        return productRepository.findById(productId).orElse(null);
+        return productRepository.findById(productId).get();
     }
 
+    // 데이터가 없는 경우 insert하는 용도
     public Product save(Product product) {
         return productRepository.save(product);
     }
 
+    // id를 주고 해당 row 삭제
     public void delete(Long productId) {
         productRepository.deleteById(productId);
     }
 
+    // 데이터가 있는 경우 update하는 용도
     public Product update(Product product) {
-        return productRepository.save(product);
+        return null;
     }
 }

@@ -15,6 +15,66 @@
 <div class="container" layout:fragment="content"  style="background-color: white">
 
   <script>
+    function movieInsert(){
+      axios.get("/movie/insert")
+              .then(function (response) {
+                alert(response.data);
+                console.log(response.data);
+              }).catch(function (error) {
+        console.log(error);
+      });
+    }
+    
+    function movieRead() {
+      // /young/all API 호출
+      axios.get('/movie/all')
+              .then(function (response) {
+                // API에서 받은 데이터
+                const data = response.data;
+                console.log(data);
+
+
+                //제목 변경
+                const title = document.querySelector("#resultTitle");
+                title.textContent = "영화 관련 정보 목록"
+
+                // 테이블의 tbody 선택
+                const tableBody = document.getElementById("tableBody");
+                tableBody.innerHTML = ''; // 기존 데이터 초기화
+                
+                const tableHead = document.getElementById("tableHead");
+                tableHead.innerHTML = ''; // 테이블 기존 헤더 초기화
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <th scope="col">#</th>
+                    <th scope="col">영화 이름</th>
+                    <th scope="col">매출액</th>
+                    <th scope="col">진입 여부</th>
+                    <th scope="col">관객수</th>
+                `
+                tableHead.appendChild(row);
+                
+                // 데이터 삽입
+                data.forEach((item, index) => {
+                  console.log(index)
+                  const row = document.createElement('tr');
+                  row.innerHTML = `
+                      <th scope="row">${index + 1}</th>
+                      <td>${item.movieNm || '내용없음'}</td>
+                      <td>${item.salesAmt === 'null' ? '내용없음' : item.salesAmt}</td>
+                      <td>${item.rankOldAndNew === 'null' ? '내용없음' : item.rankOldAndNew}</td>
+                      <td>${item.audiCnt === 'null' ? '내용없음' : item.audiCnt}</td>
+                    `;
+                  tableBody.appendChild(row);
+                });
+              })
+              .catch(function (error) {
+                console.error('데이터를 가져오는 중 오류 발생:', error);
+                alert('데이터를 가져오는 중 문제가 발생했습니다.');
+              });
+    }
+    
     function youngInsert(){
       axios.get("/young/insert")
               .then(function (response) {
@@ -33,9 +93,23 @@
                 const data = response.data;
                 console.log(data);
 
+
                 // 테이블의 tbody 선택
                 const tableBody = document.getElementById("tableBody");
                 tableBody.innerHTML = ''; // 기존 데이터 초기화
+                
+                const tableHead = document.getElementById("tableHead");
+                tableHead.innerHTML = ''; // 테이블 기존 헤더 초기화
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <th scope="col">#</th>
+                    <th scope="col">번호</th>
+                    <th scope="col">정책 이름</th>
+                    <th scope="col">장소</th>
+                    <th scope="col">내용</th>
+                `
+                tableHead.appendChild(row);
 
                 // 데이터 삽입
                 data.forEach((item, index) => {
@@ -94,7 +168,7 @@
               <img th:src="@{/images/security-icon.png}" alt="client icon">
             </div>
             <hr>
-            <button class="btn btn-warning"  id="movieInsert">
+            <button class="btn btn-warning"  id="movieInsert" onclick="movieInsert()">
               <h3>영화 관련 정보 API DB저장</h3>
             </button>
             <p>영화에 대한 정보를 Rest API를 이용해 정보를 가지고 와 DB에 저장함. </p>
@@ -106,7 +180,7 @@
               <img th:src="@{/images/security-icon-hover.png}" alt="client icon">
             </div>
             <hr>
-            <button class="btn btn-warning"  id="movieRead">
+            <button class="btn btn-warning"  id="movieRead" onclick="movieRead()">
               <h3>영화관련정보 목록 출력</h3>
             </button>
             <p>청년 지원 정책에 대한 정보를 Rest API를 이용해 정보를 가지고 와 DB에 저장함. </p>
@@ -119,13 +193,13 @@
       <section class="our-services">
         <div class="container">
           <div class="title">
-            <h2>청년지원 정책 목록</h2>
+            <h2 id="resultTitle">청년지원 정책 목록</h2>
           </div>
 
           <!-- 테이블 시작 -->
           <div class="table-responsive">
             <table class="table table-bordered table-striped" style="width: 95%;">
-              <thead class="thead-dark">
+              <thead class="thead-dark" id="tableHead">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">API 이름</th>
