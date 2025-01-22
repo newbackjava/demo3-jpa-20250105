@@ -5,6 +5,7 @@ import com.example.demo.entity.Blog;
 import com.example.demo.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -90,4 +92,21 @@ public class BlogController {
         return "blog/blog-upload";
     } //upload
 
+    @GetMapping("/total")
+    @ResponseBody
+    public ResponseEntity<Long> getTotalCount() {
+        return ResponseEntity.ok(blogService.totalCount());
+    }
+
+    @GetMapping("/up3")
+    @ResponseBody
+    public ResponseEntity<Long> up3() {
+        return ResponseEntity.ok(blogService.up3());
+    }
+
+    @GetMapping("/happy")
+    @ResponseBody
+    public ResponseEntity<Integer>happy() {
+        return ResponseEntity.ok(blogService.findHappy().size());
+    }
 }

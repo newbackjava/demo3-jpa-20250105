@@ -55,6 +55,44 @@
 </head>
 <!-- Banner Wrapper Start -->
 <div class="container" layout:fragment="content" style="background-color: white">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- ################################################################ -->
+  <script>
+    ///// total get ///////////////////////////
+        axios.get('/blog/total')
+                .then(function (response) {
+                  const data = response.data;
+                  const total = document.getElementById("total");
+                  total.innerHTML = data;
+                }).catch(function (error) {
+                  alert(error);
+                });
+    //////////////////////////////////////////
+
+    ///// up3 get ///////////////////////////
+    axios.get('/blog/up3')
+            .then(function (response) {
+              const data = response.data;
+              const up3 = document.getElementById("up3");
+              up3.innerHTML = data;
+            }).catch(function (error) {
+      alert(error);
+    });
+    //////////////////////////////////////////
+
+    ///// happy get ///////////////////////////
+    axios.get('/blog/happy')
+            .then(function (response) {
+              const data = response.data;
+              const happy = document.getElementById("happy");
+              happy.innerHTML = data;
+            }).catch(function (error) {
+      alert(error);
+    });
+    //////////////////////////////////////////
+  </script>
+  <!-- ################################################################ -->
 
   <!-- inner page wrapper start -->
   <div class="blog-wrapper inner-wrapper">
@@ -273,7 +311,10 @@
                 <li><a href="#">Qulaity Support </a> <span>(22) </span></li>
               </ul>
             </div>
+
+
             <!-- Popular posts -->
+            <!-- ################################################################ -->
             <div class="sidebar-widget popular-posts">
               <h2>Recent Posts</h2>
               <div class="media">
@@ -281,7 +322,10 @@
                 <div class="media-body">
                   <h3 class="media-heading"> <a href="#">Pixel Perfect Design</a> </h3>
                   <p>21 October, 2016</p>
-                  <div class="comments-icon"> <i class="fa fa-comments"></i>45 comments </div>
+                  <div class="comments-icon">
+                    <i class="fa fa-comments"></i>
+                    <span id="total">45</span> comments
+                  </div>
                 </div>
               </div>
               <div class="media">
@@ -289,7 +333,10 @@
                 <div class="media-body">
                   <h3 class="media-heading"> <a href="#">Excellent Performance</a> </h3>
                   <p>19 October, 2016</p>
-                  <div class="comments-icon"> <i class="fa fa-comments"></i>32 comments </div>
+                  <div class="comments-icon">
+                    <i class="fa fa-comments"></i>
+                    <span id="up3">45</span>  comments
+                  </div>
                 </div>
               </div>
               <div class="media">
@@ -297,11 +344,16 @@
                 <div class="media-body">
                   <h3 class="media-heading"> <a href="#">Qulaity Support</a> </h3>
                   <p>19 October, 2016</p>
-                  <div class="comments-icon"> <i class="fa fa-comments"></i>58 comments </div>
+                  <div class="comments-icon">
+                    <i class="fa fa-comments"></i>
+                    <span id="happy">45</span>  comments
+                  </div>
                 </div>
               </div>
             </div>
             <!-- Popular posts -->
+            <!-- ################################################################ -->
+
             <div class="sidebar-widget archives clearfix">
               <h2>Archives</h2>
               <ul class="list-unstyled">
