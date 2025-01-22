@@ -9,8 +9,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BlogService {
 
-    public String trans(String word){
+
+    public String trans (String word) {
+        APIExamTranslate3KO ko = new APIExamTranslate3KO();
         APIExamTranslate3KO en = new APIExamTranslate3KO();
-        return en.trans(word);
+
+
+        if(word.matches(".*[가-힣]+.*")) {
+            return ko.trans(word);
+        } else {
+            return en.trans(word);
+        }
     }
+
+//    public String trans(String word){
+//        APIExamTranslate3KO en = new APIExamTranslate3KO();
+//        return en.trans(word);
+//    }
 }
