@@ -12,7 +12,7 @@ public class BlogService {
 
     public String trans (String word) {
         APIExamTranslate3KO ko = new APIExamTranslate3KO();
-        APIExamTranslate3KO en = new APIExamTranslate3KO();
+        APIExamTranslate3EN en = new APIExamTranslate3EN();
 
 
         if(word.matches(".*[가-힣]+.*")) {
