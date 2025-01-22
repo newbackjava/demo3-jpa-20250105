@@ -3,6 +3,56 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout.html">
 <!-- Header End -->
+<head>
+  <style>
+    /* 기본 스타일 */
+    .contact-form .form-group input,
+    .contact-form .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    /* Hover 효과 */
+    .contact-form .form-group input:hover,
+    .contact-form .form-group textarea:hover {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+    }
+
+    /* Focus 효과 */
+    .contact-form .form-group input:focus,
+    .contact-form .form-group textarea:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+      outline: none;
+    }
+
+    /* 파일 버튼 스타일링 */
+    .contact-form .form-group .btn {
+      color: #fff;
+      background-color: red;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .contact-form .form-group .btn:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    .contact-form .form-group .btn:active {
+      background-color: #004085;
+      transform: scale(1);
+    }
+  </style>
+</head>
 <!-- Banner Wrapper Start -->
 <div class="container" layout:fragment="content" style="background-color: white">
 
@@ -115,7 +165,13 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="comment-body">
-                      <div class="comment-rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
+                      <div class="comment-rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o"></i>
+                      </div>
                       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer </p>
                     </div>
                   </div>
@@ -132,7 +188,13 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="comment-body">
-                          <div class="comment-rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i> </div>
+                          <div class="comment-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <i class="fa fa-star-o"></i>
+                          </div>
                           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem vulputate interdum et vel eros. Maecenas eros enim, tincidunt vel turpis vel, dapibus tempus nulla. Donec vel nulla dui.</p>
                         </div>
                       </div>
@@ -145,39 +207,38 @@
           <!-- Comments section end -->
 
           <!-- Contact form start -->
+          <!-- ################################################################ -->
           <div class="contact-form sidebar-widget">
             <div class="main-title-2">
               <h2> Leave a Comment</h2>
             </div>
-            <form id="contact_form" method="POST" >
+            <form id="contact_form" th:action="@{/blog/upload}" method="POST" enctype="multipart/form-data" >
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                   <div class="form-group fullname">
-                    <input name="full-name" class="input-text" placeholder="Full Name" type="text">
+                    <input name="name" class="input-text"
+                           placeholder="Full Name" value="alicia" type="text">
                   </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                   <div class="form-group enter-email">
-                    <input name="email" class="input-text" placeholder="Enter email" type="email">
+                    <input name="mail" class="input-text"
+                           placeholder="Enter mail" value="hera@naver.com" type="email">
                   </div>
                 </div>
-                <div class="col-sm-6">
-                  <div class="form-group subject">
-                    <input name="subject" class="input-text" placeholder="Subject" type="text">
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group number">
-                    <input name="phone" class="input-text" placeholder="Phone Number" type="text">
+                <div class="col-sm-12">
+                  <div class="form-group number  custom-file-upload">
+                    <input name="file" class="btn btn-warning" type="file">
                   </div>
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group chatVO">
-                    <textarea class="input-text" name="chatVO" placeholder="Write chatVO"></textarea>
+                    <textarea class="input-text" name="content"
+                              placeholder="Write">다 좋았어!!</textarea>
                   </div>
                 </div>
                 <div class="col-sm-4">
-                  <div class="form-group send-btn">
+                  <div class="form-group send-btn ">
                     <button type="submit" class="btn">Send Message</button>
                   </div>
                 </div>
@@ -185,6 +246,8 @@
             </form>
           </div>
           <!-- Contact form end -->
+          <!-- ################################################################ -->
+
         </div>
         <div class="col-lg-4 col-md-4 col-xs-12">
           <div class="sidebar">

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout.html">
+<!-- Header End -->
+<!-- Banner Wrapper Start -->
+<div class="container" layout:fragment="content"  style="background-color: white">
+
+  <!-- Our Services Start -->
+      <section class="our-services">
+        <div class="container">
+          <div class="title">
+            <h2 id="resultTitle">이미지 추출 결과</h2>
+          </div>
+
+          <!-- 테이블 시작 -->
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped" style="width: 95%;">
+              <thead class="thead-dark" id="tableHead">
+              <tr>
+                <th scope="col">번호</th>
+                <th scope="col">이름</th>
+                <th scope="col">이메일</th>
+                <th scope="col">내용</th>
+                <th scope="col">추출내용</th>
+              </tr>
+              </thead>
+              <tbody id="tableBody">
+              <tr>
+                <th>[[${blog.blogId}]]</th>
+                <th>[[${blog.name}]]</th>
+                <th>[[${blog.mail}]]</th>
+                <th>[[${blog.content}]]</th>
+                <th>[[${blog.content2}]]</th>
+                <th>
+                  <img th:src="'/upload/' + ${blog.img}">
+                </th>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- 테이블 끝 -->
+
+        </div>
+      </section>
+    </div>
+  </section>
+</div>
+</html>
