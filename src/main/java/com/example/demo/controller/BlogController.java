@@ -109,4 +109,23 @@ public class BlogController {
     public ResponseEntity<Integer>happy() {
         return ResponseEntity.ok(blogService.findHappy().size());
     }
+
+    @GetMapping("blog1")
+    @ResponseBody //json으로 데이터를 리턴
+    public ResponseEntity<String> blog1() {
+        return ResponseEntity.ok(blogService.findByBlogId1());
+    }
+
+    @GetMapping("blog2")
+    @ResponseBody //json으로 데이터를 리턴
+    public ResponseEntity<String> blog2() {
+        return ResponseEntity.ok(blogService.findByBlogId2());
+    }
+
+    @GetMapping("blog3")
+    @ResponseBody //json으로 데이터를 리턴
+    public ResponseEntity<Blog> blog3() {
+        return ResponseEntity.ok(blogService.findByBlogId3());
+    }
+
 }

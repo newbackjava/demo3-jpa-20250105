@@ -21,5 +21,15 @@ public interface BlogRepository
 
     @Query("select b from Blog b where b.content2 like '%행복%' order by b.blogId DESC")
     List<Blog> findHappy();
+
+
+    @Query("select b.content from Blog b where b.blogId = 1")
+    String findByBlogId1();
+
+    @Query("select b.content from Blog b where b.blogId = 2")
+    String findByBlogId2();
+
+    @Query("select b from Blog b where b.blogId = 3")
+    Blog findByBlogId3();
 }
 

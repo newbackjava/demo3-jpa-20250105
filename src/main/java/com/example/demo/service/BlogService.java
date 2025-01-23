@@ -75,4 +75,20 @@ public class BlogService {
     public List<Blog> findHappy() {
         return blogRepository.findHappy();
     }
+
+
+    //id로 content를 검색--> return이 string
+    public String findByBlogId1 () {
+        return blogRepository.findByBlogId1();
+    }
+
+    //id로 content를 검색--> return이 string
+    public String findByBlogId2 () {
+        return blogRepository.findByBlogId2();
+    }
+
+    //id로 content, mail을 검색--> return이 entity(vo)
+    public Blog findByBlogId3 () {
+        return blogRepository.findByBlogId3();
+    }
 }
