@@ -14,6 +14,16 @@ spring:
         cachecontrol:
           no-store: true
 
+    # kafka #######################################################
+    kafka:
+      bootstrap-servers: localhost:9092 # Kafka 브로커 주소
+      producer:
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      consumer:
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
 
 # db setting(+dbcp) #######################################################
   datasource:
@@ -103,6 +113,9 @@ management:
     health:
       show-details: always
   endpoints:
+    web:
+      exposure:
+        include: '*'
     jmx:
       exposure:
         include: '*'

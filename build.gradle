@@ -140,6 +140,19 @@ dependencies {
     //************************************************************************
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+
+    //************************************************************************
+    //  Kafka 의존성
+    //************************************************************************
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.apache.kafka:kafka-streams' // Kafka Streams 라이브러리
+
+    //************************************************************************
+    //  actuator
+    //************************************************************************
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+
     ////////////////////////////////////////////////////////////////////////////
     //************************************************************************
     // Spring Boot Test
