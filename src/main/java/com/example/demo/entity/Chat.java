@@ -25,5 +25,4 @@ public class Chat {
 
     @Column(nullable = false) // NotNull에 대응
     private LocalDateTime createdAt;
-
 }

@@ -49,11 +49,11 @@
     let loginId = 'apple';
 
     function connect() {
-      const socket = new SockJS('/chat-websocket');
+      const socket = new SockJS('/chatbot-websocket');
       stompClient = Stomp.over(socket);
       stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/messages', function (response) {
+        stompClient.subscribe('/topic/chatbot', function (response) {
           const json = JSON.parse(response.body);
           console.log('Received message:', json);
           json.message = json.message.replace(/^"|"$/g, '');
@@ -70,7 +70,7 @@
         "loginId": loginId
       }
       if (messageInput.trim() !== '') {
-        stompClient.send("/app/sendMessage", {}, JSON.stringify(data));
+        stompClient.send("/app/chatbot", {}, JSON.stringify(data));
         document.getElementById('messageInput').value = '';
       }
     }
@@ -122,6 +122,7 @@
                      class="form-control me-2"
                      placeholder="챗봇을 시작하고 싶으면 '시작'이라고 입력하세요." />
               <button class="btn btn-primary" style="width: 100%;" onclick="sendMessage()">Send</button>
+              <a href="/chat/chat2"><button class="btn btn-danger" style="width: 100%;">Chatting Room</button></a>
             </div>
           </div>
         </div>

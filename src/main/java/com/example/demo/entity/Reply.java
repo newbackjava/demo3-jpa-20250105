@@ -1,26 +1,24 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "reply")
 public class Reply {
+
     @Id
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long replyNo;
 
     @NotNull
-    @Column(name = "oriid", nullable = false)
-    private Integer oriid;
+    @Column(nullable = false)
+    private Long bbsNo; //bbs의 bbsNo
 
     @Size(max = 255)
     @NotNull
@@ -30,6 +28,6 @@ public class Reply {
     @Size(max = 100)
     @NotNull
     @Column(name = "writer", nullable = false, length = 100)
-    private String writer;
+    private String writer; //member테이블의 memberId
 
 }

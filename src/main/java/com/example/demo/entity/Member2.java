@@ -2,10 +2,8 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.kafka.clients.consumer.ConsumerGroupMetadata;
 
 import java.util.List;
 
@@ -13,8 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Member {
+public class Member2 {
 
     @Id
     private String memberId;
@@ -27,10 +24,5 @@ public class Member {
 
     @Column
     private String tel;
-
-    @OneToMany(mappedBy = "member",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Bbs> bbsList; // Member가 작성한 게시글 목록
 
 }

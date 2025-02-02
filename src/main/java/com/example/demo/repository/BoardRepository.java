@@ -11,8 +11,10 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
   @Query("select count(b) from Board b where b.title = ?1")
   long queryCount(String title);
 
+  //부등호 등의 세부 조건인 경우 JPQL을 사용해주어야함.
+  //JPQL을 사용해 insert, delete, update를 하는 경우 Transactional, Modifying넣어주어야함.
   @Transactional
   @Modifying
-  @Query("delete from Board b where b.id > ?1")
+  @Query("delete from Board b where b.no > ?1")
   int deleteByIdAfter(Integer id);
 }

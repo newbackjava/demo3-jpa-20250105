@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>JWT 인증 (Axios + CSRF 보호)</title>
+
+<!--    <script src="/js/axiosInstance.js" defer></script>-->
+<!--    <script src="/js/login.js" defer></script>-->
+<!--    <script src="/js/userInfo.js" defer></script>-->
+<!--    <script src="/js/logout.js" defer></script>-->
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script src="/js/jwt.js"></script>
+</head>
+<body>
+
+<h2>로그인</h2>
+<label for="username">UserName</label>
+<input type="text" id="username" placeholder="아이디" value="user">
+<label for="password">Password</label>
+<input type="password" id="password" placeholder="비밀번호" value="user123">
+<button onclick="login()">로그인</button>
+
+<h2>사용자 정보</h2>
+<button onclick="getUserInfo()">내 정보 가져오기</button>
+<p id="user-info"></p>
+
+<h2>로그아웃</h2>
+<button onclick="logout()">로그아웃</button>
+
+</body>
+</html>

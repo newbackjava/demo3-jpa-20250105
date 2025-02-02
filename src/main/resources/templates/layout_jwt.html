@@ -73,12 +73,12 @@
                                 <!-- 로그인 상태 확인 -->
                                 <li sec:authorize="isAuthenticated()">
                                     <!--                                    jwt인증 적용 전 -->
-                                    <a class="nav-link" th:href="@{/logout}">로그아웃</a>
+<!--                                    <a class="nav-link" th:href="@{/logout}">로그아웃</a>-->
                                     <!--                                    jwt인증 적용 후 -->
-                                    <!-- <a class="nav-link" th:href="@{/api/logout}">로그아웃</a> -->
+                                    <a class="nav-link" th:href="@{/api/logout}">로그아웃</a>
                                 </li>
                                 <li sec:authorize="isAnonymous()">
-                                    <a class="nav-link" th:href="@{/login}">로그인</a>
+                                    <a class="nav-link" th:href="@{/login2}">로그인</a>
                                 </li>
                                 <li class="active"><a href="/">Home</a></li>
 <!--                                <li><a th:href="@{/live/live}">LIVE</a></li>-->

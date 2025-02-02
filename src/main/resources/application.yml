@@ -13,6 +13,12 @@ spring:
       cache:
         cachecontrol:
           no-store: true
+      add-mappings: true # #################전역 에러 설정
+      # 정적 리소스(/static, /public 등) 매핑 비활성화
+  mvc:
+    throw-exception-if-no-handler-found: true # #################전역 에러 설정
+    # 존재하지 않는 URL 요청 시 404 Not Found 예외 발생
+
 
     # kafka #######################################################
     kafka:
@@ -32,7 +38,7 @@ spring:
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
-      pool-name: WinnerHikariPool
+      pool-name: ======>> HikariPool <<======
       minimum-idle: 5
       maximum-pool-size: 10
       connection-timeout: 30000
@@ -82,30 +88,47 @@ spring:
 #  db/migration/V1__create_product_table.sql
 #  db/migration/V2__insert_initial_data.sql
 
-
-
-
+jwt:
+  secret: "MySecretKeyForJwtAuthentication12345!"  # JWT 서명 키 (중요!)
+  expiration: 86400000  # 1일 (24시간) 동안 토큰 유지
 
 
 # lggging #######################################################
 logging:
   level:
     root: INFO
-    com.example.demo: DEBUG
-    org.springframework.web: DEBUG
+    com.example.demo: INFO
+    org.springframework.web: INFO
+    org.springframework.security : DEBUG
     org.thymeleaf: INFO
-    org.springframework.boot.web.servlet: ERROR
+    org.springframework.boot.web.servlet: INFO
     org.hibernate.SQL: DEBUG  # SQL 실행 로그
-    org.hibernate.type.descriptor.sql: TRACE  # SQL 바인딩 파라미터 로그
+    org.hibernate.type.descriptor.sql: DEBUG  # SQL 바인딩 파라미터 로그
     # 쿼리와 함께 파라미터 값을 출력
-    org.hibernate.stat: DEBUG  # Hibernate 통계 관련 로그
+    org.hibernate.stat: INFO  # Hibernate 통계 관련 로그
     # Hibernate가 제공하는 통계 정보를 출력
+    org.springframework.kafka: ERROR
+    org.apache.kafka: ERROR
   file:
     name: logs/app.log
     path: logs
   pattern:
     console: '%logger{36} - %msg%n'
     file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+
+
+#logging:
+#  level:
+#    root: INFO
+#    com.example.demo: DEBUG
+#    org.springframework.web: DEBUG
+#    org.thymeleaf: INFO
+#    org.springframework.boot.web.servlet: ERROR
+#    org.hibernate.SQL: DEBUG  # SQL 실행 로그
+#    org.hibernate.type.descriptor.sql: TRACE  # SQL 바인딩 파라미터 로그
+#    # 쿼리와 함께 파라미터 값을 출력
+#    org.hibernate.stat: DEBUG  # Hibernate 통계 관련 로그
+#    # Hibernate가 제공하는 통계 정보를 출력
 
 # monitoring #######################################################
 management:
@@ -124,6 +147,10 @@ management:
 # server.port #######################################################
 server:
   port: 8888
+  error:
+    whitelabel:
+      enabled: false # #################전역 에러 설정
+      # 기본 Whitelabel Error Page 비활성화
 
 # file upload #######################################################
 upload:
