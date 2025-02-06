@@ -6,9 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Value
 @RequestMapping("member")
@@ -23,6 +21,11 @@ public class MemberController {
         return "member/member";
     }
 
+    @GetMapping("read")
+    @ResponseBody
+    public String read(@RequestParam("id") String id) {
+        return id + "검색 결과";
+    }
     @PostMapping("login")
     public String login(HttpSession session, String memberId) {
         Member member = memberService.findMemberById(memberId);

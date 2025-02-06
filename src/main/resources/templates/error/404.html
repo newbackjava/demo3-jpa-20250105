@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>오류 발생</title>
+    <title>404 - 접근 금지</title>
+
     <style>
         body {
             text-align: center;
@@ -22,12 +23,13 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Oops! 오류가 발생했습니다.</h1>
-    <p class="error-details">요청을 처리하는 동안 문제가 발생했습니다.</p>
-    <p class="error-details">에러 코드: <span th:text="${status}"></span></p>
-    <p class="error-details">메시지: <span th:text="${error}"></span></p>
-    <p><a href="/">홈으로 돌아가기</a></p>
-</div>
+<h1>404 Not Found</h1>
+<p>요청한 페이지를 찾을 수 없습니다.</p>
+<img th:src="@{/images/034.png}" alt="403" />
+<hr color="red">
+<hr color="red">
+<a   href="/">
+    <button>홈으로 돌아가기</button>
+</a>
 </body>
 </html>

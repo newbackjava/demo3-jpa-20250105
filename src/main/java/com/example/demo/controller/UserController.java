@@ -36,6 +36,7 @@ public class UserController {
 
     @GetMapping("/user-info")
     public String getUserInfo(@AuthenticationPrincipal UserDetails userDetails) {
+        System.out.println(userDetails.getUsername());
         String userId = userDetails != null ? userDetails.getUsername() : "guest";
         System.out.println("로그인한 userId = " + userId);
         return "user/userInfo";

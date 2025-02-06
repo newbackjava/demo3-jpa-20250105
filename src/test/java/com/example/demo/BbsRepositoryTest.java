@@ -96,8 +96,6 @@ public class BbsRepositoryTest {
         assertEquals(bbs.getTitle(), result.get(0).getTitle());
     }
 
-
-
     // test통과 250131
     @Test
     public void testFindBbsWithMemberFetch() {

@@ -35,7 +35,7 @@ import java.util.List;
             SELECT new com.example.demo.dto.MemberBbsDto
                 (b.bbsNo, b.title, b.content, b.member.memberId, b.member.name)
                 FROM Bbs b JOIN b.member WHERE b.bbsNo = :bbsNo
-             """)
+            """)
         MemberBbsDto findBbsWithMember(@Param("bbsNo") Long bbsNo);
 
 
@@ -43,7 +43,7 @@ import java.util.List;
         @Query("""
             SELECT  b
                 FROM Bbs b JOIN FETCH b.member WHERE b.bbsNo = :bbsNo
-             """)
+            """)
         Bbs findBbsWithMemberFetch(@Param("bbsNo") Long bbsNo);
 
 

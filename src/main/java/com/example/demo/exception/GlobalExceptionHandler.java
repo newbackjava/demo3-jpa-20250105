@@ -1,16 +1,12 @@
-package com.example.demo.config;
+package com.example.demo.exception;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 //@ControllerAdvice //--->     // 기본 예외 처리인 경우(모두 error.html로 처리하고자 하는 경우)
 @Controller
@@ -44,19 +40,19 @@ public class GlobalExceptionHandler implements ErrorController {
             // 404 에러 페이지
             if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 model.addAttribute("error", "페이지를 찾을 수 없습니다.");
-                result = "error-404"; // templates/error-404.html
+                result = "error/404"; // error/404.html
             }
 
             // 403 에러 페이지
             if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 model.addAttribute("error", "접근 권한이 없습니다.");
-                result = "error-403"; // templates/error-403.html
+                result = "error/403"; // error/403.html
             }
 
             // 500 에러 페이지 (기타 서버 에러)
             if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 model.addAttribute("error", "서버 내부 오류가 발생했습니다.");
-                result = "error-500"; // templates/error-500.html
+                result = "error/500"; // error/500.html
             }
         }
 

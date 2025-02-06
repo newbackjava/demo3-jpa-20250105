@@ -184,6 +184,8 @@ dependencies {
 //    options.annotationProcessorGeneratedSourcesDirectory = file(generated)
 //}
 //
+//Gradle 빌드 시스템이 테스트 코드의 소스 디렉토리를 올바르게 인식하도록 하기 위해서
+//특정 소스 코드의 디렉토리를 명시적으로 지정
 sourceSets {
     test {
         java.srcDirs = ['src/test/java']

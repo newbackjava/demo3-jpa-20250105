@@ -1,7 +1,6 @@
 package com.example.demo.repository;
 
 import com.example.demo.dto.MemberBbsDto;
-import com.example.demo.entity.Bbs;
 import com.example.demo.entity.Bbs2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,16 +30,16 @@ public interface Bbs2Repository extends JpaRepository<Bbs2, Long> {
  */
     @Query("""
     SELECT new com.example.demo.dto.MemberBbsDto(
-        b.bbsNo, 
-        b.title, 
+        b.bbsNo,
+        b.title,
         b.content,
-        m.memberId, 
+        m.memberId,
         m.name
     )
     FROM Bbs2 b
     JOIN Member2 m
     WHERE m.memberId = :writer
-""")
+    """)
     Page<MemberBbsDto> findByWriter(@Param("writer") String writer, Pageable pageable);
 
     ///////  Native Query ===> Service단에서 dto로 매핑시켜줘야함.

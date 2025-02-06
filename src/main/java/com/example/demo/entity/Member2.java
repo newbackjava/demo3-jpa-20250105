@@ -24,5 +24,4 @@ public class Member2 {
 
     @Column
     private String tel;
-
 }

@@ -16,4 +16,10 @@ public class MemberService {
     public Member findMemberById(String id) {
         return memberRepository.findById(id).orElse(null);
     }
+
+    public int deleteMember(int id) {
+        return 1;
+    }
+
+
 }
