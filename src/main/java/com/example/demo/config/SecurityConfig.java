@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 
 import com.example.demo.service.UserDetailsServiceImpl;
+import com.example.demo.util.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
@@ -20,102 +22,54 @@ import java.util.List;
 public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
+    private final JwtFilter jwtFilter;
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    //역할(Role)	        사용자명 (Username)	비밀번호 (Password)
-    //관리자(ADMIN)	        admin	        admin123
-    //일반 사용자 (USER)	    user	        user123
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    /// 1.  security에서 제공하는 기본 form사용!
-    ///     데이터는 처음에 load
-    ///     부트 프로젝트 시작하면, 로그인 화면이 보이고, 로그인 성공하면 /로 시작함.
-    ///     layout.html에 인증여부에 따라 login/logout보이게 수정해야함.
-
-    /*
+    ///  3. custome한 login form있는 html파일 지정 ===> jwt적용
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+//                .cors(cors -> cors.configurationSource(request -> {
+//                    CorsConfiguration config = new CorsConfiguration();
+//                    config.setAllowedOrigins(List.of("http://localhost:8888")); // 프론트엔드 주소
+//                    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//                    config.setAllowedHeaders(List.of("*"));
+//                    config.setAllowCredentials(true);
+//                    return config;
+//                }))
                 .csrf(csrf -> csrf.disable())
+//                .csrf(csrf -> csrf
+//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // CSRF 토큰을 쿠키에 저장
+//                )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                        .anyRequest().authenticated()
-                )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic();
-
-        return http.build();
-    }
-    */
-    ////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ///  2. custome한 login form있는 html파일 지정
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/logout", "/css/**", "/js/**", "/images/**", "/assets/**").permitAll() // 정적 리소스 접근 허용
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                        .anyRequest().authenticated()
-                        //.anyRequest().permitAll()
+                                //루트는 모두 허용
+                                //.requestMatchers("/", "/login", "/logout", "/css/**", "/js/**", "/images/**", "/assets/**").permitAll()
+                                .requestMatchers("/", "/login2","/auth/login3/", "/auth/logout3", "/css/**", "/js/**", "/images/**", "/assets/**").permitAll()
+                                // 정적 리소스 접근 허용, 싱글톤빈으로 static주소(resources아래 폴더) 접근 제어 가능
+                                .requestMatchers("/admin/**", "/chat/chat").hasRole("ADMIN") //admin, chat/chat 주소 접근은 ADMIN role만 접근 가능
+                                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") //user 주소 접근은 ADMIN/USER role중 어떤 것이든 접근 가능
+                                //.anyRequest().authenticated() //모두 인증필요
+                                .anyRequest().permitAll() //모두 허용하고, admin과 user로 시작하는 사이트와 /chat/chat만 로그인 필요
                 )
                 .formLogin(login -> login
-                        .loginPage("/login")
+                        .loginPage("/login2")
                         .defaultSuccessUrl("/user-info", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
+                        .logoutUrl("/auth/logout3")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
+                        .deleteCookies("JSESSIONID", "accessToken")
                         .permitAll()
                 )
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); //✅ JWT 필터 추가
 
         return http.build();
     }
 
-
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.disable()) // CSRF 비활성화 (REST API 용도)
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/admin/**", "/chat/chat").hasRole("ADMIN")
-//                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-//                        .anyRequest().permitAll()
-//                )
-//                .formLogin(login -> login
-//                        .loginPage("/login") // 커스텀 로그인 페이지
-//                        .defaultSuccessUrl("/user-info", true) // 로그인 성공 후 이동
-//                        .permitAll()
-//                )
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout") // 로그아웃 요청 URL
-//                        .logoutSuccessUrl("/custom-logout-page") // 로그아웃 성공 후 이동할 페이지
-//                        .invalidateHttpSession(true) // 세션 무효화
-//                        .deleteCookies("JSESSIONID") // 쿠키 삭제
-//                        .permitAll()
-//                )
-//                .sessionManagement(session ->
-//                        session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)); // 세션 정책 (JWT 사용 시 STATELESS)
-//
-//        return http.build();
-//    }
-
-
-    /*
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:sec2="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,10 +72,19 @@
                             <ul class="nav navbar-nav">
                                 <!-- 로그인 상태 확인 -->
                                 <li sec:authorize="isAuthenticated()">
-                                    <a class="nav-link" th:href="@{/logout}">로그아웃</a>
+                                    <!--                                    jwt인증 적용 전 -->
+<!--                                    <a class="nav-link" th:href="@{/logout}">로그아웃</a>-->
+                                    <!--                                    jwt인증 적용 후 -->
+                                    <span style="color: white"> [[${#authentication.name}]]님! </span> <a class="nav-link" th:href="@{/auth/logout3}">로그아웃</a>
                                 </li>
+
+<!--                                <li sec:authorize="isAnonymous()">-->
+<!--                                    <a class="nav-link" th:href="@{/login}">로그인</a>-->
+<!--                                </li>-->
+
+
                                 <li sec:authorize="isAnonymous()">
-                                <a class="nav-link" th:href="@{/login}">로그인</a>
+                                    <a class="nav-link" th:href="@{/login2}">로그인</a>
                                 </li>
                                 <li class="active"><a href="/">Home</a></li>
 <!--                                <li><a th:href="@{/live/live}">LIVE</a></li>-->

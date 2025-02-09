@@ -1,0 +1,87 @@
+////////////////////////////////////////////////
+// axiosInstance.js
+// CSRF 토큰 저장 변수
+let csrfToken = "";
+
+
+// HTTPOnly 쿠키는 자바스크립트에서 접근할 수 없지만,
+// 브라우저는 자동으로 HTTPOnly 쿠키를 모든 요청에 포함시킴.
+// 이 쿠키는 withCredentials 옵션과는 관계없이, <a> 태그나 서버로의 기본적인 HTTP 요청에서 자동으로 전송됨.
+
+const api = axios.create({
+    baseURL: "http://localhost:8888/api",
+    withCredentials: true, // HTTPOnly 쿠키 포함 (자동으로 전송됨)
+    // GET /some-endpoint HTTP/1.1
+    // Host: example.com
+    // Cookie: JWT_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhdXRob3IiLCJleHBpcmVkX3VzZXIiOiJ1c2VyX2F1dGgiLCJpYXQiOjE2Mjg4NDEwMzF9.GZsM...
+    headers: {
+        "Content-Type": "application/json"
+    }
+});
+
+// 서버에서 CSRF 토큰 가져오기
+async function fetchCsrfToken() {
+    const response = await api.get("/csrf-token");
+    csrfToken = response.data.token;
+}
+
+// Axios 요청 인터셉터: 모든 요청에 CSRF 토큰 추가
+api.interceptors.request.use(config => {
+    if (csrfToken) {
+        config.headers["X-CSRF-TOKEN"] = csrfToken;
+    }
+    return config;
+});
+
+////////////////////////////////////////////////
+// login.js
+async function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    try {
+        const response = await api.post("login3", { username, password });
+        console.log(response);
+        // const response = await api.post("/login", { username, password });
+
+        if (response.status === 200) {
+            if (response.data.includes('성공')) {
+                await fetchCsrfToken(); // 로그인 후 CSRF 토큰 가져오기
+                alert(response.data);
+            }else{
+                alert("로그인 실패!");
+            }
+        }
+    } catch (error) {
+        alert("로그인 실패!");
+        console.error("로그인 오류:", error);
+    }
+}
+
+////////////////////////////////////////////////
+// logout.js
+async function logout() {
+    try {
+        await api.get("logout3");
+        alert("로그아웃 성공!");
+    } catch (error) {
+        alert("로그아웃 실패!");
+        console.error("로그아웃 오류:", error);
+    }
+}
+
+////////////////////////////////////////////////
+// userInfo.js
+async function getUserInfo() {
+    try {
+        const response = await api.get("user-info3");
+
+        if (response.status === 200) {
+            alert(`사용자 정보: ${response.data}`)
+            document.getElementById("user-info").innerText = `사용자 정보: ${response.data}`;
+        }
+    } catch (error) {
+        alert("인증 실패! 다시 로그인하세요.");
+        console.error("사용자 정보 가져오기 오류:", error);
+    }
+}

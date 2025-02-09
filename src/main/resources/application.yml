@@ -89,8 +89,10 @@ spring:
 #  db/migration/V2__insert_initial_data.sql
 
 jwt:
-  secret: "MySecretKeyForJwtAuthentication12345!"  # JWT 서명 키 (중요!)
-  expiration: 86400000  # 1일 (24시간) 동안 토큰 유지
+  secret: "MySecretKeyForJwtAuthentication12345!"
+  # JWT 서명 키 (중요!), 32바이트 이상 --> 주기적으로 변경해주어야함.
+  expiration: 10000  # --> 10초
+  # expiration: 86400000  # 1일 (24시간) 동안 토큰 유지, 밀리초 1000 --> 1초
 
 
 # lggging #######################################################

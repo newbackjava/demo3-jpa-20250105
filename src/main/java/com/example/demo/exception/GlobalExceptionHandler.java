@@ -31,7 +31,7 @@ public class GlobalExceptionHandler implements ErrorController {
         // HTTP 상태 코드 가져오기
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
-        String result = "error";
+        String result = "error/error";
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
 
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler implements ErrorController {
             // 500 에러 페이지 (기타 서버 에러)
             if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 model.addAttribute("error", "서버 내부 오류가 발생했습니다.");
-                result = "error/500"; // error/500.html
+                result = "error/error"; // error/500.html
             }
         }
 
