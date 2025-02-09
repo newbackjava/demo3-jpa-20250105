@@ -39,19 +39,28 @@ public class AuthController {
         try {
             authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password));
+            //userDetailsService.loadUserByUsername(username) 내부적으로 호출하여 id/pw맞는지 검증해줌.
         } catch (BadCredentialsException e) {
             return Map.of("error", "로그인 실패: 잘못된 사용자 이름 또는 비밀번호");
         }
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println(authentication.getPrincipal());
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
         // 사용자 정보 조회
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        // ✅ 인증 성공 → SecurityContext에 저장될 정보 가져오기
+
+        /// /////////////////////////////// 실습 부분 //////////////////////////////////////////////
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        /// /////////////////////////////// 실습 부분 //////////////////////////////////////////////
+
         if (userDetails == null) {
             return Map.of("error", "로그인 실패: 사용자 정보를 찾을 수 없습니다");
         }
 
         System.out.println(userDetails.getUsername() + "==============\n" +
                 userDetails.getPassword() + "==============\n" +
-                userDetails.getAuthorities());
+                userDetails.getAuthorities() + "==============\n");
 
         // 역할(Role) 가져오기
         String role = userDetails.getAuthorities().isEmpty() ? "ROLE_USER"
@@ -61,12 +70,14 @@ public class AuthController {
         String token = jwtUtil.generateToken(userDetails.getUsername(), role);
 
         // ✅ HTTPOnly, Secure 쿠키에 JWT 저장
+/// /////////////////////////////// 실습 부분 //////////////////////////////////////////////
         Cookie cookie = new Cookie("accessToken", token);
         cookie.setHttpOnly(true);
         cookie.setSecure(true); // HTTPS 환경에서만 전송
         cookie.setPath("/");
         cookie.setMaxAge(86400); // 1일 (초 단위)
         response.addCookie(cookie);
+/// /////////////////////////////// 실습 부분 //////////////////////////////////////////////
 
         System.out.println("✅ 발급된 JWT: " + token);
         return Map.of("message", "성공", "token", token);
@@ -78,12 +89,14 @@ public class AuthController {
     @PostMapping("/logout3")
     public Map<String, String> logout(HttpServletResponse response) {
         // ✅ 쿠키에서 JWT 제거
+/// /////////////////////////////// 실습 부분 //////////////////////////////////////////////
         Cookie cookie = new Cookie("accessToken", "");
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(0); // 즉시 만료
         response.addCookie(cookie);
+/// /////////////////////////////// 실습 부분 //////////////////////////////////////////////
 
         return Map.of("message", "로그아웃 성공!");
     }
@@ -96,6 +109,7 @@ public class AuthController {
     public Map<String, String> getUserInfo(Authentication authentication) {
 
         // ✅ SecurityContextHolder에서 사용자 정보 가져오기
+/// /////////////////////////////// 실습 부분 //////////////////////////////////////////////
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
             String role = authentication.getAuthorities().iterator().next().getAuthority();
@@ -103,7 +117,7 @@ public class AuthController {
             System.out.println("✅ SecurityContext에서 가져온 사용자: " + username + " | 역할: " + role);
             return Map.of("username", username, "role", role);
         }
-
+/// /////////////////////////////// 실습 부분 //////////////////////////////////////////////
         // ✅ 인증되지 않은 경우
         return Map.of("error", "로그인 정보 없음");
     }
